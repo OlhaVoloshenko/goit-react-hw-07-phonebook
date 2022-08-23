@@ -1,31 +1,34 @@
-//import { useSelector } from 'react-redux';
+import { useState } from 'react';
 import { Title } from './App.styled';
 import { InputForm } from 'components/InputForm';
-import { Filter } from 'components/Filter';
+import { Filter } from 'components/Filter/';
 import { ContactList } from 'components/ContactList';
 import { PhonebookBox } from 'components/Phonebook/Phonebook.styled';
 import { InputFormBox } from 'components/InputForm/InputForm.styled';
 import { ContactListBox } from 'components/ContactList/ContactList.styled';
+import { useGetContactsQuery } from 'components/ContactsApi/contactsApi';
 
-export const App = () => {
-  //const contacts = useSelector(store => store.contacts.items);
-  /* const contactsFilter = useSelector(store => store.contacts.filter);
+export function App() {
+  const { data } = useGetContactsQuery();
 
-  const normalizedFilter = contactsFilter.toLowerCase();
-  const filteredContacts = name.filter(contact =>
+  const contacts = data ?? [];
+  const [myFilter, setMyFilter] = useState('');
+
+  const normalizedFilter = myFilter.toLowerCase();
+  const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(normalizedFilter)
-  );*/
+  );
 
   return (
     <PhonebookBox>
       <InputFormBox>
         <Title>Phonebook</Title>
-        <InputForm />
+        <InputForm contacts={contacts} />
       </InputFormBox>
       <ContactListBox>
-        <Filter />
-        <ContactList />
+        <Filter filter={myFilter} setFilter={setMyFilter} />
+        <ContactList contacts={filteredContacts.reverse()} />
       </ContactListBox>
     </PhonebookBox>
   );
-};
+}

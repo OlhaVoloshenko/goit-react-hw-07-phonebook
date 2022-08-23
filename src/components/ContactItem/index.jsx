@@ -1,18 +1,19 @@
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { removeContact } from 'Redux/contactCreateSlice';
 import {
   ListItem,
   TelNum,
   DelBtn,
+  NumByOrder,
 } from 'components/ContactList/ContactList.styled';
+import { useDeleteContactMutation } from 'components/ContactsApi/contactsApi';
 
-export function ContactItem({ name, number, id }) {
-  const dispatch = useDispatch();
+export function ContactItem({ contact, item }) {
+  const [deleteContact] = useDeleteContactMutation();
   return (
     <ListItem>
-      {name}: <TelNum>{number}</TelNum>
-      <DelBtn type="button" onClick={() => dispatch(removeContact(id))}>
+      <NumByOrder>{item + 1}</NumByOrder>
+      {contact.name}: <TelNum>{contact.number}</TelNum>
+      <DelBtn type="button" onClick={() => deleteContact(contact.id)}>
         Delete
       </DelBtn>
     </ListItem>

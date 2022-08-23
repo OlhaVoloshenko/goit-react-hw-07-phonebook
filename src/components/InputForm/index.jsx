@@ -1,13 +1,9 @@
-import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from 'Redux/contactCreateSlice';
 import { InputItem } from './InputForm.styled';
-import { nanoid } from 'nanoid';
 import { Formik, Form } from 'formik';
+import { useAddContactMutation } from 'components/ContactsApi/contactsApi';
 
-export function InputForm() {
-  const contacts = useSelector(store => store.contacts.items);
-  const dispatch = useDispatch();
+export function InputForm({ contacts }) {
+  const [addContact] = useAddContactMutation();
 
   const onSubmit = (values, action) => {
     const equalName = contacts.find(
@@ -15,8 +11,7 @@ export function InputForm() {
     );
     if (equalName) return alert(equalName.name + ' is already in contacts');
 
-    values.id = nanoid();
-    dispatch(addContact(values));
+    addContact(values);
     action.resetForm();
   };
   return (
@@ -48,7 +43,3 @@ export function InputForm() {
     </Formik>
   );
 }
-
-InputForm.propTypes = {
-  submitHandle: PropTypes.func,
-};
