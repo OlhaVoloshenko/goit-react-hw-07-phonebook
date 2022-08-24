@@ -1,11 +1,11 @@
-// mockapi - https://630224a9e71700618a4443c0.mockapi.io/contacts/:endpoint
+// mockapi - https://6306447ec0d0f2b80119ba0a.mockapi.io/:endpoint
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const contactsApi = createApi({
   reducerPath: 'contacts',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://630224a9e71700618a4443c0.mockapi.io',
+    baseUrl: 'https://6306447ec0d0f2b80119ba0a.mockapi.io/',
   }),
   endpoints: builder => ({
     getContacts: builder.query({

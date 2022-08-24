@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { Title } from './App.styled';
+import { useGetContactsQuery } from 'components/ContactsApi/contactsApi';
+
 import { InputForm } from 'components/InputForm';
 import { Filter } from 'components/Filter/';
 import { ContactList } from 'components/ContactList';
+import { Title } from './App.styled';
 import { PhonebookBox } from 'components/Phonebook/Phonebook.styled';
 import { InputFormBox } from 'components/InputForm/InputForm.styled';
 import { ContactListBox } from 'components/ContactList/ContactList.styled';
-import { useGetContactsQuery } from 'components/ContactsApi/contactsApi';
 
 export function App() {
   const { data } = useGetContactsQuery();
