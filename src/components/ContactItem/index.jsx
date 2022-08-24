@@ -12,7 +12,7 @@ export function ContactItem({ contact, item }) {
   return (
     <ListItem>
       <NumByOrder>{item + 1}</NumByOrder>
-      {contact.name}: <TelNum>{contact.number}</TelNum>
+      {contact.name}: <TelNum>{contact.phone}</TelNum>
       <DelBtn type="button" onClick={() => deleteContact(contact.id)}>
         Delete
       </DelBtn>

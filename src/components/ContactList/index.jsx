@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import { ContactItem } from 'components/ContactItem/index';
-import { ContactListBox } from './ContactList.styled';
+import { ContactListBox, TitleContactsList } from './ContactList.styled';
 
 export function ContactList({ contacts }) {
   return (
     <>
-      <h2>Contact List</h2>
+      <TitleContactsList>Contact List</TitleContactsList>
       {contacts.length ? (
         <ContactListBox>
           {contacts.map((contact, item) => (

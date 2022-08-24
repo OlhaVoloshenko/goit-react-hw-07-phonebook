@@ -3,8 +3,8 @@ import { Field } from 'formik';
 
 export const InputFormBox = styled.div`
   padding: 12px;
-  margin: 4px;
-  width: 360px;
+  margin: 0 auto;
+  width: 452px;
   border: 1px solid black;
   border-radius: 8px;
   background-color: beige;

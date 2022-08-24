@@ -5,9 +5,11 @@ import { InputForm } from 'components/InputForm';
 import { Filter } from 'components/Filter/';
 import { ContactList } from 'components/ContactList';
 import { Title } from './App.styled';
-import { PhonebookBox } from 'components/Phonebook/Phonebook.styled';
+import {
+  PhonebookBox,
+  ContactListBox,
+} from 'components/Phonebook/Phonebook.styled';
 import { InputFormBox } from 'components/InputForm/InputForm.styled';
-import { ContactListBox } from 'components/ContactList/ContactList.styled';
 
 export function App() {
   const { data } = useGetContactsQuery();
