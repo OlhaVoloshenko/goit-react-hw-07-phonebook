@@ -1,6 +1,6 @@
 import { InputItem } from './InputForm.styled';
 import { Formik, Form } from 'formik';
-import { useAddContactMutation } from 'components/ContactsApi/contactsApi';
+import { useAddContactMutation } from 'Redux/contactsApi';
 
 export function InputForm({ contacts }) {
   const [addContact] = useAddContactMutation();

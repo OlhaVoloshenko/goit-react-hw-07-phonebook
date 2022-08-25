@@ -5,7 +5,7 @@ import {
   DelBtn,
   NumByOrder,
 } from 'components/ContactList/ContactList.styled';
-import { useDeleteContactMutation } from 'components/ContactsApi/contactsApi';
+import { useDeleteContactMutation } from 'Redux/contactsApi';
 
 export function ContactItem({ contact, item }) {
   const [deleteContact] = useDeleteContactMutation();
