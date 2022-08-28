@@ -3,23 +3,26 @@ import {
   ListItem,
   TelNum,
   DelBtn,
-  NumByOrder,
 } from 'components/ContactList/ContactList.styled';
 import { useDeleteContactMutation } from 'Redux/contactsApi';
 
-export function ContactItem({ contact, item }) {
-  const [deleteContact] = useDeleteContactMutation();
+export const ContactItem = ({ name, number, id }) => {
+  const [deleteContact, { isLoading }] = useDeleteContactMutation();
   return (
     <ListItem>
-      <NumByOrder>{item + 1}</NumByOrder>
-      {contact.name}: <TelNum>{contact.phone}</TelNum>
-      <DelBtn type="button" onClick={() => deleteContact(contact.id)}>
+      {name}: <TelNum>{number}</TelNum>
+      <DelBtn
+        type="button"
+        disabled={isLoading}
+        onClick={() => deleteContact(id)}
+      >
         Delete
       </DelBtn>
     </ListItem>
   );
-}
+};
 ContactItem.propTypes = {
-  contact: PropTypes.object,
-  item: PropTypes.number,
+  name: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };

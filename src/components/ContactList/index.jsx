@@ -1,23 +1,25 @@
-import PropTypes from 'prop-types';
 import { ContactItem } from 'components/ContactItem/index';
 import { ContactListBox, TitleContactsList } from './ContactList.styled';
+import { useGetContactsQuery } from 'Redux/contactsApi';
+import { useSelector } from 'react-redux';
+//import { useState } from 'react';
 
-export function ContactList({ contacts }) {
+export const ContactList = () => {
+  const filter = useSelector(state => state.filter);
+  const { data } = useGetContactsQuery();
+
+  const normalizedFilter = filter.toLowerCase();
+  const filteredContacts = data.filter(contact =>
+    contact.name.toLowerCase().includes(normalizedFilter)
+  );
   return (
     <>
       <TitleContactsList>Contact List</TitleContactsList>
-      {contacts.length ? (
-        <ContactListBox>
-          {contacts.map((contact, item) => (
-            <ContactItem key={contact.id} contact={contact} item={item} />
-          ))}
-        </ContactListBox>
-      ) : (
-        <p>No any contacts</p>
-      )}
+      <ContactListBox>
+        {filteredContacts.map(({ id, name, phone }) => {
+          return <ContactItem key={id} id={id} name={name} number={phone} />;
+        })}
+      </ContactListBox>
     </>
   );
-}
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.object),
 };

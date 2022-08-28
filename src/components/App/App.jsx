@@ -1,4 +1,4 @@
-import { useState } from 'react';
+//import { useState } from 'react';
 import { useGetContactsQuery } from 'Redux/contactsApi';
 
 import { InputForm } from 'components/InputForm';
@@ -11,27 +11,25 @@ import {
 } from 'components/Phonebook/Phonebook.styled';
 import { InputFormBox } from 'components/InputForm/InputForm.styled';
 
-export function App() {
-  const { data } = useGetContactsQuery();
-
-  const contacts = data ?? [];
-  const [myFilter, setMyFilter] = useState('');
-
-  const normalizedFilter = myFilter.toLowerCase();
-  const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(normalizedFilter)
-  );
+export const App = () => {
+  const { data, isLoading } = useGetContactsQuery();
 
   return (
     <PhonebookBox>
       <InputFormBox>
         <Title>Phonebook</Title>
-        <InputForm contacts={contacts} />
+        <InputForm />
       </InputFormBox>
       <ContactListBox>
-        <Filter filter={myFilter} setFilter={setMyFilter} />
-        <ContactList contacts={filteredContacts.reverse()} />
+        <Filter />
+        {isLoading ? (
+          <p className="message">Loading...</p>
+        ) : data.length > 0 ? (
+          <ContactList />
+        ) : (
+          <p className="message">Contacts list is empty</p>
+        )}
       </ContactListBox>
     </PhonebookBox>
   );
-}
+};

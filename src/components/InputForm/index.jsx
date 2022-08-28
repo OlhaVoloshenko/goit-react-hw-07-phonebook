@@ -1,22 +1,51 @@
 import { InputItem } from './InputForm.styled';
 import { Formik, Form } from 'formik';
-import { useAddContactMutation } from 'Redux/contactsApi';
+import { useState } from 'react';
+import { useAddContactMutation, useGetContactsQuery } from 'Redux/contactsApi';
 
-export function InputForm({ contacts }) {
+export const InputForm = () => {
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const { data: contacts } = useGetContactsQuery();
   const [addContact] = useAddContactMutation();
 
-  const onSubmit = (values, action) => {
-    const equalName = contacts.find(
-      el => el.name.toLowerCase() === values.name.toLowerCase()
-    );
-    if (equalName) return alert(equalName.name + ' is already in contacts');
+  const handleChange = evt => {
+    switch (evt.target.name) {
+      case 'name':
+        setName(evt.target.value);
+        break;
+      case 'phone':
+        setPhone(evt.target.value);
+        break;
 
-    addContact(values);
-    action.resetForm();
+      default:
+        console.log('Wrong field name');
+        break;
+    }
   };
+  const handleSubmit = evt => {
+    evt.preventDefault();
+
+    const normalizeName = name.toLowerCase();
+    const isExist = contacts
+      .map(contact => contact.name)
+      .some(name => name.toLowerCase() === normalizeName);
+
+    if (isExist) {
+      alert(`${name} is already in contacts.`);
+
+      return;
+    }
+
+    addContact({ name, phone });
+
+    setName('');
+    setPhone('');
+  };
+
   return (
-    <Formik initialValues={{ name: '', phone: '' }} onSubmit={onSubmit}>
-      <Form>
+    <Formik>
+      <Form onSubmit={handleSubmit}>
         <label>
           Name
           <InputItem
@@ -26,6 +55,8 @@ export function InputForm({ contacts }) {
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
+            value={name}
+            onChange={handleChange}
           />
         </label>
         <label>
@@ -36,10 +67,12 @@ export function InputForm({ contacts }) {
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
+            value={phone}
+            onChange={handleChange}
           />
         </label>
         <button type="submit">Add contact</button>
       </Form>
     </Formik>
   );
-}
+};
